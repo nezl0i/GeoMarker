@@ -24,3 +24,4 @@ wheel==0.47.0
 
 requests
 pydantic-settings
+flask-socketio

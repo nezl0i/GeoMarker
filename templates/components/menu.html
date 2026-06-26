@@ -1,0 +1,38 @@
+<!-- Меню -->
+<div id="menu">
+    <div class="brand">🗺️ Карта</div>
+    <div class="separator"></div>
+
+    <div class="group">
+        <button class="active" data-layer="google">🛰️ Google</button>
+        <button data-layer="yandex">🇷🇺 Yandex</button>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="group">
+        <label>
+            ✏️ Метка:
+            <input type="text" id="labelInput" placeholder="Название метки" value="Моя метка" />
+        </label>
+        <button id="addMarkerBtn">➕ Добавить</button>
+        <button id="btnClearAll" class="danger">🗑️ Очистить</button>
+        <button id="btnShowAllMarkers">📍 Все метки</button>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="group">
+        <div id="search-coords">
+            <input type="text" id="search-x" placeholder="X (широта)" maxlength="7" />
+            <input type="text" id="search-y" placeholder="Y (долгота)" maxlength="7" />
+            <button id="search-btn">🔍 Найти</button>
+        </div>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="group">
+        <button id="toggleLayersMenu">🗂️ Слои</button>
+    </div>
+</div>

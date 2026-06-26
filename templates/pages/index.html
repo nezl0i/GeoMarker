@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Карта 30 ОМБр{% endblock %}
+
+{% block content %}
+    <!-- Меню -->
+    {% include "components/menu.html" %}
+
+    <!-- Панель слоёв -->
+    {% include "components/layers_panel.html" %}
+
+    <!-- Крестик в центре -->
+    <div id="crosshair">
+        <div class="dot"></div>
+    </div>
+
+        <!-- Информационная панель -->
+    {% include "components/info_panel.html" %}
+
+        <!-- Модальное окно метки -->
+    {% include "components/marker_modal.html" %}
+
+       <!-- Модальное окно списка меток -->
+    {% include "components/markers_list_modal.html" %}
+
+    <!-- Индикатор слоя -->
+    <div id="layerIndicator" class="layer-indicator">🛰️ Google Satellite</div>
+
+{% endblock %}

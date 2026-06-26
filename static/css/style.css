@@ -1150,8 +1150,8 @@ body {
 
 /* Индикатор старых меток*/
 .stat-dot-old {
-    background: #800000;
-    border: 2px solid #666;
+    background: #fde404;
+    border: 2px solid #ff6200;
 }
 
 /* Метка (New/Old) */

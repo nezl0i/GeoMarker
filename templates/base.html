@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Карта 30 ОМБр{% endblock %}</title>
+
+    <!-- OpenLayers CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ol.css') }}" />
+
+    <!-- OpenLayers JS -->
+    <script src="{{ url_for('static', filename='lib/ol.js') }}"></script>
+
+    <!-- Наши стили -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+
+    <!-- Наши скрипты -->
+    <script src="{{ url_for('static', filename='js/config.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/markers.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/layers.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ui.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/search.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    {% block head_extra %}{% endblock %}
+</head>
+<body>
+
+    {% block content %}{% endblock %}
+
+    <!-- Контейнер карты -->
+    <div id="map"></div>
+
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+    {% block scripts_extra %}{% endblock %}
+</body>
+</html>

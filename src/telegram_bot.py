@@ -1,14 +1,12 @@
 import asyncio
 import re
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from telethon import TelegramClient, events
 import logging
 import requests
 from pyproj import Transformer
-from config import TelegramSettings
-
-
-settings = TelegramSettings()
+from src.config import settings
+from src.websocket import emit_new_marker
 
 # Настройка логирования
 logging.basicConfig(
@@ -26,6 +24,7 @@ API_HASH = settings.API_HASH
 PHONE_NUMBER = settings.PHONE_NUMBER
 GROUP_ID = settings.GROUP_ID
 
+MOSCOW_TZ = timezone(timedelta(hours=3))
 
 class TelegramListener:
     def __init__(self, app, db, marker_model):
@@ -86,7 +85,7 @@ class TelegramListener:
                 except (Exception,):
                     pass
 
-    async def read_recent_messages(self, limit=5):
+    async def read_recent_messages(self, limit=3):
         """Читает последние сообщения из группы"""
         try:
             if not self.group_entity:
@@ -149,7 +148,7 @@ class TelegramListener:
             y_val = data.get('y_value')
             agent = data.get('agent', 'Unknown')
             # message_text = data.get('message_text', '')
-            message_date = data.get('message_date', datetime.now().isoformat())
+            message_date = data.get('message_date', datetime.now(MOSCOW_TZ).isoformat())
 
             if not x_val or not y_val:
                 return
@@ -172,7 +171,7 @@ class TelegramListener:
                         lat=lat,
                         lng=lng,
                         label=label,
-                        created_at=datetime.now()
+                        created_at=datetime.now(MOSCOW_TZ)
                     )
                     self.db.session.add(marker)
                     self.db.session.commit()
@@ -181,10 +180,11 @@ class TelegramListener:
 
                     try:
                         # Вызываем API для обновления счетчиков на фронтенде
-
-                        requests.post('http://localhost:5000/api/markers/refresh', json={"marker_id": marker.id})
-                    except (Exception,):
-                        pass
+                        # requests.post('http://localhost:5000/api/markers/refresh', json={"marker_id": marker.id})
+                        emit_new_marker(marker.to_dict())
+                        logger.info(f"📡 WebSocket уведомление отправлено")
+                    except (Exception,) as e:
+                        logger.warning(f"⚠️ Ошибка отправки WebSocket: {e}")
 
             except Exception as db_error:
                 logger.error(f"❌ Ошибка БД: {db_error}")

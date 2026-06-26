@@ -1,0 +1,38 @@
+<!-- Модальное окно для редактирования метки -->
+<div id="markerModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; justify-content: center; align-items: center;">
+    <div style="background: rgba(10,10,10,0.98); padding: 30px; border-radius: 8px; max-width: 450px; width: 90%; border: 1px solid rgba(0,255,65,0.2); box-shadow: 0 0 60px rgba(0,0,0,0.9); color: #00ff41; max-height: 90vh; overflow-y: auto;">
+        <h3 style="margin-bottom: 15px; color: #00ff41; text-shadow: 0 0 30px rgba(0,255,65,0.3); font-family: 'Courier New', monospace;">📍 Информация о метке</h3>
+
+        <div style="margin-bottom: 10px;">
+            <label style="font-weight: 600; font-size: 13px; color: rgba(0,255,65,0.6); font-family: 'Courier New', monospace;">Название:</label>
+            <input type="text" id="editLabel" placeholder="Введите название" />
+        </div>
+
+        <div style="margin-bottom: 10px;">
+            <label style="font-weight: 600; font-size: 13px; color: rgba(0,255,65,0.6); font-family: 'Courier New', monospace;">Координаты WGS84:</label>
+            <div class="coord-container">
+                <span id="modal-lat">—</span>, <span id="modal-lng">—</span>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 10px;">
+            <label style="font-weight: 600; font-size: 13px; color: rgba(0,255,65,0.6); font-family: 'Courier New', monospace;">Координаты СК42:</label>
+            <div class="coord-container">
+                X=<span id="modal-sk42-x">—</span>, Y=<span id="modal-sk42-y">—</span>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="font-weight: 600; font-size: 13px; color: rgba(0,255,65,0.6); font-family: 'Courier New', monospace;">Высота над уровнем моря:</label>
+            <div class="coord-container">
+                <span id="modal-elevation">—</span>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button id="modalSaveBtn" style="flex: 1; padding: 10px; background: rgba(0,255,65,0.15); color: #00ff41; border: 1px solid rgba(0,255,65,0.3); border-radius: 4px; cursor: pointer; font-weight: 600; min-width: 80px;">💾 Сохранить</button>
+            <button id="modalDeleteBtn" style="flex: 1; padding: 10px; background: rgba(255,0,0,0.1); color: #ff4444; border: 1px solid rgba(255,0,0,0.3); border-radius: 4px; cursor: pointer; font-weight: 600; min-width: 80px;">🗑️ Удалить</button>
+            <button id="modalCloseBtn" style="padding: 10px 20px; background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; cursor: pointer;">✖</button>
+        </div>
+    </div>
+</div>

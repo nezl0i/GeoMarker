@@ -1,0 +1,29 @@
+<!-- Панель слоёв -->
+<div id="layersPanel" style="display: none; position: absolute; top: 80px; left: 50%; transform: translateX(-50%); z-index: 1000; background: rgba(10,10,10,0.95); padding: 20px; border-radius: 8px; border: 1px solid rgba(0,255,65,0.2); min-width: 300px; max-height: 70vh; overflow-y: auto; color: #00ff41;">
+    <h3 style="margin-bottom: 15px; color: #00ff41; font-family: 'Courier New', monospace;">🗂️ Управление слоями</h3>
+
+    <div style="margin-bottom: 20px;">
+        <h4 style="color: #00ff41; font-family: 'Courier New', monospace;">📤 Загрузить MBTiles</h4>
+        <input type="text" id="mbtilesName" placeholder="Название слоя" class="dark-input" />
+        <input type="file" id="mbtilesUpload" accept=".mbtiles" class="dark-input" />
+        <button id="uploadMbtilesBtn" class="btn-mbtiles">Загрузить</button>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <h4 style="color: #00ff41; font-family: 'Courier New', monospace;">📤 Загрузить KML</h4>
+        <input type="text" id="kmlName" placeholder="Название слоя" class="dark-input" />
+        <input type="file" id="kmlUpload" accept=".kml" class="dark-input" />
+        <button id="uploadKmlBtn" class="btn-kml">Загрузить</button>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <h4 style="color: #00ff41; font-family: 'Courier New', monospace;">📤 Загрузить HGT</h4>
+        <input type="file" id="hgtUpload" accept=".hgt" class="dark-input" />
+        <button id="uploadHgtBtn" class="btn-hgt">Загрузить</button>
+    </div>
+
+    <div>
+        <h4 style="color: #00ff41; font-family: 'Courier New', monospace;">📂 Активные слои</h4>
+        <div id="layersList" style="max-height: 300px; overflow-y: auto;"></div>
+    </div>
+</div>

@@ -75,6 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
     map.getView().on('change:resolution', updateInfo);
     setTimeout(updateInfo, 500);
 
+
     // ============================================
     // ЗАПУСК АВТОМАТИЧЕСКОГО ОБНОВЛЕНИЯ
     // ============================================
@@ -86,6 +87,103 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('✅ Автообновление меток активировано');
         }
     }, 3000);
+
+    let socket = null;
+    let wsConnected = false;
+    let wsRetryCount = 0;
+    const MAX_WS_RETRY = 5;
+
+    function initWebSocket() {
+        try {
+            // Проверяем, доступен ли WebSocket
+            if (typeof io === 'undefined') {
+                console.warn('⚠️ Socket.IO не загружен, используем polling');
+                // Запускаем polling если WebSocket недоступен
+            if (typeof startAutoUpdate === 'function') {
+                startAutoUpdate();
+            }
+                return;
+            }
+
+            socket = io({
+                reconnection: true,
+                reconnectionAttempts: MAX_WS_RETRY,
+                reconnectionDelay: 1000
+            });
+
+            socket.on('connect', function() {
+                wsConnected = true;
+                wsRetryCount = 0;
+                console.log('✅ WebSocket подключен');
+
+                            // Останавливаем polling
+            if (typeof stopAutoUpdate === 'function') {
+                stopAutoUpdate();
+                console.log('🛑 Polling остановлен (WebSocket активен)');
+            }
+
+            });
+
+            socket.on('new_marker', function(marker) {
+                console.log('📥 Получена новая метка через WebSocket:', marker);
+
+                if (typeof addMarkerFromData === 'function') {
+                    addMarkerFromData(marker);
+                    updateMarkersCount();
+                    loadAllMarkersList();
+                }
+            });
+
+            socket.on('disconnect', function() {
+                wsConnected = false;
+                console.log('❌ WebSocket отключен');
+
+                // Запускаем polling как резерв
+                if (typeof startAutoUpdate === 'function') {
+                    startAutoUpdate();
+                    console.log('🔄 Polling запущен (WebSocket отключен)');
+                }
+                // Пробуем переподключиться через 5 секунд
+                // setTimeout(function() {
+                //     if (!wsConnected) {
+                //         initWebSocket();
+                //     }
+                // }, 5000);
+            });
+
+            socket.on('connect_error', function(error) {
+                console.error('WebSocket ошибка:', error);
+                wsRetryCount++;
+
+                if (wsRetryCount >= MAX_WS_RETRY) {
+                console.warn('⚠️ Превышено количество попыток WebSocket, переключение на polling');
+                if (typeof startAutoUpdate === 'function') {
+                    startAutoUpdate();
+                    }
+                }
+            });
+
+        } catch(e) {
+            console.warn('⚠️ Ошибка инициализации WebSocket:', e);
+
+            if (typeof startAutoUpdate === 'function') {
+            startAutoUpdate();
+            }
+        }
+    }
+
+    // Запускаем WebSocket через 1 секунду
+    setTimeout(function() {
+        initWebSocket();
+    }, 1000);
+
+    // Если WebSocket не подключился через 5 секунд, запускаем polling как резерв
+    setTimeout(function() {
+        if (!wsConnected && typeof startAutoUpdate === 'function') {
+            console.log('🔄 WebSocket не подключен, запускаем polling');
+            startAutoUpdate();
+        }
+    }, 5000);
 
     log('Приложение загружено!', 'success');
     log('📌 Добавление меток: кнопка "➕ Добавить" или двойной клик по карте', 'info');

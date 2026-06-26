@@ -1,0 +1,58 @@
+<!-- Информационная панель -->
+<div id="info-panel">
+    <div class="panel-title">█ ROOT@MAP █</div>
+
+    <!-- Счетчики меток -->
+    <div class="markers-stats">
+        <span class="stat-group">
+            <span class="stat-dot stat-dot-new"></span>
+            <span class="stat-label">Новые</span>
+            <span id="newMarkersCount" class="stat-count stat-count-new">(0)</span>
+        </span>
+        <span class="stat-group">
+            <span class="stat-dot stat-dot-old"></span>
+            <span class="stat-label">Старые</span>
+            <span id="oldMarkersCount" class="stat-count stat-count-old">(0)</span>
+        </span>
+        <span class="stat-divider">|</span>
+        <span class="stat-total-label">Всего</span>
+        <span id="totalMarkersCount" class="stat-total-count">0</span>
+    </div>
+
+    <div style="margin-bottom: 8px; border-bottom: 1px solid rgba(0, 255, 65, 0.1); padding-bottom: 6px;">
+        <div class="label">🌐 WGS84</div>
+        <div class="coord-row">
+            <div class="coord-item">
+                <span class="label">LAT</span>
+                <span class="value" id="wgs84-lat">—</span>
+                <span style="font-size:10px; color:rgba(0,255,65,0.3);" id="wgs84-lat-format">—</span>
+            </div>
+            <div class="coord-item">
+                <span class="label">LON</span>
+                <span class="value" id="wgs84-lng">—</span>
+                <span style="font-size:10px; color:rgba(0,255,65,0.3);" id="wgs84-lng-format">—</span>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 8px; border-bottom: 1px solid rgba(0, 255, 65, 0.1); padding-bottom: 6px;">
+        <div class="label">🇷🇺 СК42 (EPSG:28406)</div>
+        <div class="coord-row">
+            <div class="coord-item">
+                <span class="label">X (LAT)</span>
+                <span class="value" id="sk42-x" style="font-family: 'Courier New', monospace;">—</span>
+                <span style="font-size:10px; color:rgba(0,255,65,0.3);" id="sk42-x-format">—</span>
+            </div>
+            <div class="coord-item">
+                <span class="label">Y (LON)</span>
+                <span class="value" id="sk42-y" style="font-family: 'Courier New', monospace;">—</span>
+                <span style="font-size:10px; color:rgba(0,255,65,0.3);" id="sk42-y-format">—</span>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="label">⛰️ ELEVATION</div>
+        <div class="value" id="elevation" style="font-size: 16px;">—</div>
+    </div>
+</div>
