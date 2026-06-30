@@ -214,6 +214,12 @@ function updateInfo() {
     var lonLat = ol.proj.toLonLat(center);
     var lng = lonLat[0];
     var lat = lonLat[1];
+    var zoom = map.getView().getZoom();
+
+    var menuZoom = getElement('menu-zoom');
+    if (menuZoom) {
+        menuZoom.textContent = zoom.toFixed(1);
+    }
 
     getElement('wgs84-lat').textContent = lat.toFixed(7);
     getElement('wgs84-lng').textContent = lng.toFixed(7);

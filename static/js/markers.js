@@ -170,7 +170,7 @@ function addMarkerFromData(markerData) {
     log('📥 Добавлена метка через WebSocket: ' + markerData.label, 'success');
 }
 
-window.addMarkerFromData = addMarkerFromData;
+// window.addMarkerFromData = addMarkerFromData;
 
 // ============================================
 // ДОБАВЛЕНИЕ МЕТКИ (РУЧНОЕ)

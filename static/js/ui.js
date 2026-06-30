@@ -466,6 +466,17 @@ function initUI() {
         });
     }
 
+        // ========== ЗАКРЫТИЕ ПАНЕЛИ СЛОЁВ ==========
+    var layersPanelCloseBtn = getElement('layersPanelCloseBtn');
+    if (layersPanelCloseBtn) {
+        layersPanelCloseBtn.addEventListener('click', function() {
+            var panel = getElement('layersPanel');
+            if (panel) {
+                panel.style.display = 'none';
+            }
+        });
+    }
+
     // Сохранение метки
     var saveBtn = getElement('modalSaveBtn');
     if (saveBtn) {

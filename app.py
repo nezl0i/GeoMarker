@@ -161,7 +161,7 @@ if __name__ == "__main__":
 
     init_db()
 
-    PORT = 5000
+    PORT = 5055
 
     print(f"📁 База данных: {DB_PATH}")
     print(f"📁 Загрузки: {UPLOAD_FOLDER}")

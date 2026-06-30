@@ -55,5 +55,4 @@ messages/*.txt
 .env.production
 
 # API keys and sensitive data
-src/config.py
 secrets.py

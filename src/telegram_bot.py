@@ -71,7 +71,7 @@ class TelegramListener:
             self.running = True
 
             # Читаем последние сообщения для теста
-            await self.read_recent_messages(limit=5)
+            await self.read_recent_messages(limit=2)
 
             # Ожидание новых сообщений
             logger.info("🔄 Ожидание новых сообщений...")
@@ -217,18 +217,40 @@ def parse_message_content(text: str, message_date: str, sender_name: str = "Unkn
     Парсинг сообщения на наличие ключевых слов и извлечение данных
     """
 
+    agents = {
+        "гармонь 30": "Гармонь 30",
+        "гармонь30": "Гармонь 30",
+        "пинициллин": "Пенициллин 9АБР",
+        "пенициллин": "Пенициллин 9АБР",
+        "пенициллин 9абр": "Пенициллин 9АБР",
+        "пенициллин 9арб": "Пенициллин 9АБР",
+        "пенициллин 9 арб": "Пенициллин 9АБР",
+        "пенициллин 9 абр": "Пенициллин 9АБР",
+        "пинициллин 9 арб": "Пенициллин 9АБР",
+        "пинициллин 9 абр": "Пенициллин 9АБР",
+        "аргус30": "Аргус 30",
+        "аргус 30": "Аргус 30",
+        "хищник": "Хищник",
+        "гармонь 83": "Гармонь 83",
+        "аргус 83": "Аргус 83",
+        "аргус 2 мсп": "Аргус 2 МСП",
+        "аргус 810": "Аргус 810",
+        "аргус810": "Аргус 810",
+    }
+
     def find_first(pattern: str) -> str | None:
         match = re.search(pattern, text)
         return match.group(0) if match else None
 
     # 1. Поиск агента (ключевые слова или имя отправителя)
-    agent = None
-    keywords = ['Пенициллин 9АБр', 'Аргус 30', 'Гармонь 30']
-
-    for keyword in keywords:
-        if keyword in text:
-            agent = keyword
-            break
+    # agent = None
+    # keywords = ['Пенициллин 9АБр', 'Аргус 30', 'Гармонь 30']
+    #
+    # for keyword in keywords:
+    #     if keyword in text:
+    #         agent = keyword
+    #         break
+    agent = next((agents[a] for a in agents if a in text.lower()), "")
 
     # Если ключевое слово не найдено, используем имя отправителя
     if not agent:

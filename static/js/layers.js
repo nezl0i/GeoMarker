@@ -155,15 +155,6 @@ async function addKmlLayer(layerData) {
         map.addLayer(vectorLayer);
         kmlLayers[layerData.id] = vectorLayer;
 
-        var extent = vectorSource.getExtent();
-        if (extent && extent[0] !== Infinity) {
-            map.getView().fit(extent, {
-                padding: [50, 50, 50, 50],
-                duration: 1000,
-                maxZoom: 16
-            });
-        }
-
         log('KML слой "' + layerData.name + '" добавлен', 'success');
         loadKmlLayers();
     } catch(e) {

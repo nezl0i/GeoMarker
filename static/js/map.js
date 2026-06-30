@@ -1,11 +1,10 @@
-// static/js/map.js
-
 // Глобальные переменные для карты
 var map = null;
 var layerMap = {};
 var currentBaseLayer = null;
 var mbtilesLayers = {};
 var kmlLayers = {};
+var zoomDisplayElement = null;
 
 // Инициализация карты
 function initMap() {
@@ -29,16 +28,44 @@ function initMap() {
 
         // Загружаем сохраненное состояние
         loadMapState();
+        // createZoomDisplay();
 
         // Сохраняем состояние при движении
         map.getView().on('change:center', saveMapState);
-        map.getView().on('change:resolution', saveMapState);
+        map.getView().on('change:resolution', saveMapState, updateZoomDisplay());
+
+        setTimeout(function() {
+            updateZoomDisplay();
+        }, 100);
 
         return true;
     } catch(e) {
         log('Ошибка создания карты: ' + e.message, 'error');
         return false;
     }
+}
+
+function createZoomDisplay() {
+    // Проверяем, не существует ли уже элемент
+    if (document.getElementById('zoom-display')) {
+        zoomDisplayElement = document.getElementById('zoom-display');
+        return;
+    }
+}
+
+function updateZoomDisplay() {
+    if (!map) return;
+
+    var zoom = map.getView().getZoom();
+    var menuZoom = getElement('menu-zoom');
+    if (menuZoom) {
+        menuZoom.textContent = zoom.toFixed(1);
+    }
+}
+
+function getCurrentZoom() {
+    if (!map) return 10;
+    return map.getView().getZoom();
 }
 
 // Сохранение состояния карты
@@ -59,12 +86,26 @@ function saveMapState() {
 function loadMapState() {
     var state = loadState(APP_CONFIG.mapStateKey);
     if (state && state.center && state.zoom !== undefined) {
+        if (state.zoom < 5 || state.zoom > 20) {
+            log('⚠️ Сохраненный зум (' + state.zoom + ') вне допустимого диапазона, используем default', 'warning');
+            var view = map.getView();
+            view.setZoom(APP_CONFIG.defaultZoom || 13);
+            return false;
+        }
+
         var view = map.getView();
         view.setCenter(state.center);
         view.setZoom(state.zoom);
+
+        setTimeout(function() {
+            updateZoomDisplay();
+        }, 200);
         log('Состояние карты загружено: зум=' + state.zoom, 'success');
         return true;
     }
+        var view = map.getView();
+    view.setZoom(APP_CONFIG.defaultZoom || 13);
+    log('Установлен зум по умолчанию: 13', 'info');
     return false;
 }
 
@@ -155,3 +196,7 @@ function updateMarkerStyles() {
         }
     }, 100);
 }
+
+window.updateZoomDisplay = updateZoomDisplay;
+window.getCurrentZoom = getCurrentZoom;
+window.createZoomDisplay = createZoomDisplay;

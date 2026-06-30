@@ -3,8 +3,8 @@
 // Конфигурация приложения
 const APP_CONFIG = {
     // Дефолтный центр карты (Курская область)
-    defaultCenter: [36.1872, 51.7333],
-    defaultZoom: 10,
+    defaultCenter: [34.90163, 51.08638],
+    defaultZoom: 13,
 
     // Ключ для localStorage
     mapStateKey: 'map_state',
